@@ -1350,7 +1350,8 @@ public class GitSCM extends GitSCMBackwardCompatibility {
         }
 
         String commitToBuild = revToBuild.revision.getSha1String();
-        if (!this.getBranches().isEmpty()) {
+        Pattern commitHashPattern = Pattern.compile("[0-9a-f]{40}", Pattern.CASE_INSENSITIVE);
+        if (!this.getBranches().isEmpty() && commitHashPattern.matcher(this.getBranches().get(0).toString()).find()) {
             commitToBuild = this.getBranches().get(0).toString();
             listener.getLogger().println("A commit ID is passed in, override the checkout hash to: " + commitToBuild);
         }
